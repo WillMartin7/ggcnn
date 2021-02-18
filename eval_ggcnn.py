@@ -45,9 +45,11 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
 
-    # Load Network
-    net = torch.load(args.network)
-    device = torch.device("cuda:0")
+        # Load Network
+    # net = torch.load(args.network)
+    net = torch.load(args.network, map_location={'cuda:0': 'cpu'})
+    # device = torch.device("cuda:0")
+    device = torch.device("cpu")
 
     # Load Dataset
     logging.info('Loading {} Dataset...'.format(args.dataset.title()))
