@@ -79,12 +79,15 @@ if __name__ == '__main__':
             logging.info('Processing {}/{}'.format(idx+1, len(test_data)))
             xc = x.to(device)
             yc = [yi.to(device) for yi in y]
-            lossd = net.compute_loss(xc, yc)
+            
             start_time = time.time()
+            lossd = net.compute_loss(xc, yc)
+            print("--- %s seconds ---" % (time.time() - start_time))
+            
             q_img, ang_img, width_img = post_process_output(lossd['pred']['pos'], lossd['pred']['cos'],
                                                         lossd['pred']['sin'], lossd['pred']['width'])
                                                         
-            print("--- %s seconds ---" % (time.time() - start_time))
+            
 
             if args.iou_eval:
                 s = evaluation.calculate_iou_match(q_img, ang_img, test_data.dataset.get_gtbb(didx, rot, zoom),
